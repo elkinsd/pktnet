@@ -1,0 +1,6 @@
+.*
+reminders
+results
+pktnet
+*.zip
+!.gitignore
