@@ -106,6 +106,14 @@ $(document).ready(function(){
 						download_link.click();
 					}
 				},
+				{
+					text: "Copy Text",
+					icon: "ui-icon-clipboard",
+					class: "copy-button",
+					click: function() {
+						navigator.clipboard.writeText($("pre textarea", $(this)).val());
+					}
+				},
 				/*
 				{
 					text: "Remove Extra Lines",
