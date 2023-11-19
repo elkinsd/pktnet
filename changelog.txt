@@ -1,5 +1,13 @@
 Changelog
 
+11/19/2023 - v1.1
+
+Disable the remove-extra-lines button in dialog (N3MEL)
+Update forms to use local css file, set body text to larger, monospace font (KC1JMH)
+Update forms to include copy-text button in dialog to copy text to system clipboard (KC1JMH)
+Update ICS-213 header to match style of other forms (KC1JMH)
+Update index to match style (KN4LQN, KC1JMH)
+
 11/06/2023 - v1.0
 
 Added new forms and expanded functionality:
