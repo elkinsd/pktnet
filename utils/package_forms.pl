@@ -18,6 +18,7 @@ my $save_as = "pktnet-forms.zip";
 my @files = `ls *.html`; chomp @files;
 foreach my $file (@files) {
 	if ($file eq "index.html" || $file eq "blank.html") { next; }
+	if ($file eq "local_wx.html" || $file eq "blank.html") { next; }
 
 	my $online_link = qq{<a href="$online_location/$file">Use the latest version of this form online</a>};
 
