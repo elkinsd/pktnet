@@ -22,11 +22,39 @@ $(document).ready(function(){
 	datetime += " " + pad(now.getUTCHours()) + ":" + pad(now.getUTCMinutes()) + ":" + pad(now.getUTCSeconds()) + "Z";
 	$("#datetime").val(datetime);
 
+	$("input[type=text], textarea").each(function() {
+		if ($(this).attr("data-default")) {
+			$(this).css("color","gray");
+			$(this).val($(this).attr("data-default"));
+			$(this).on("focus", function() {
+				if ($(this).val() == $(this).attr("data-default")) {
+					$(this).val("");
+					$(this).css("color","black");
+				}
+			});
+			$(this).on("change blur", function() {
+				if($(this).val().length == 0) {
+					$(this).css("color","gray");
+					$(this).val($(this).attr("data-default"));
+				}
+				else if ($(this).val() != $(this).attr("data-default")) {
+					$(this).css("color","black");
+				}
+			});
+		}
+	});
+
 	$("#save-data").on("click", function() {
 		var form_fields = $("input[type=text], textarea, select", $("form"));
 		var data = {};
 		$(form_fields).each(function(e) {
 			var field = $(this).attr("id");
+			if ($(this).attr("data-default")) {
+				if ($(this).val() == $(this).attr("data-default")) {
+					data[field] = "";
+					return;
+				}
+			};
 			data[field] = $(this).val();
 		});
 		data = JSON.stringify(data);
@@ -60,13 +88,21 @@ $(document).ready(function(){
 			} catch (error) {
 				// do nothing
 			}
-			for (const [key, value] of Object.entries(data)) { $("#"+key).val(value); }
+			for (const [key, value] of Object.entries(data)) { $("#"+key).val(value); $("#"+key).trigger("change"); }
 		};
 		file_reader.readAsText(new_file);
 	});
 
 	$("#generate").on("click",function() {
 		$("#dialog").empty();
+
+		$("input[type=text], textarea").each(function() {
+			if ($(this).attr("data-default")) {
+				if ($(this).val() == $(this).attr("data-default")) {
+					$(this).val("");
+				}
+			}
+		});
 	
 		var html = "<pre>";
 		html += '<textarea style="height:100%; width:100%; min-height: auto;">';
@@ -141,6 +177,13 @@ $(document).ready(function(){
 			open: function() {
 				var dialog_height = parseInt($(this).css("height")) - 50;
 				$("textarea", $(this)).css("height",dialog_height + 'px');
+			},
+			close: function() {
+				$("input[type=text], textarea").each(function() {
+					if ($(this).attr("data-default")) {
+						$(this).trigger("blur");
+					}
+				});
 			},
 			buttons: [
 				{
