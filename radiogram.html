@@ -70,8 +70,7 @@ $(document).ready(function(){
 		this.value = this.value.replace(/[ ]+/g," ");
 
 		// calculate the check
-		var message = this.value.replace(/\s+$/,"");
-		var check = message.split(/[\s]/).length;
+		var check = this.value.replace(/\s+$/,"").replace(/^\s+/,"").split(/[\s]/).length;
 		if (this.value.match(/\bARL\b/)) { check = "ARL " + check; }
 		$("#check").val(check);
 	});
@@ -272,7 +271,7 @@ $(document).ready(function(){
 
 		// message
 		html += "BT\n";
-		html += $("#message").val().split(/((?:[\w\/]+ ){5})/g).filter(Boolean).join("\n");
+		html += $("#message").val().replace(/\s+$/,"").replace(/^\s+/,"").split(/((?:[\w\/]+ ){5})/g).filter(Boolean).join("\n");
 		html += "\n";
 		html += "BT\n";
 
