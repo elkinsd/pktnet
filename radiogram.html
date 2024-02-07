@@ -61,9 +61,24 @@ $(document).ready(function(){
 	$("#email").on("change input", function() { this.value = this.value.replace(/[\.]/," DOT ").replace(/[\@]/," ATSIGN ").replace(/[\/]/," SLASH ").replace(/[\_]/," UNDERSCORE ").replace(/[\-]/," DASH "); });
 	$("#op_note1").on("input", function() { this.value = this.value.replace(/[^0-9A-Za-z ]/,""); });
 
+	// message
+	$("#message").on("input", function() { this.value = this.value.replace(/[^0-9A-Za-z\.\? \/-]/,""); });
+	$("#message").on("change input", function() {
+		this.value = this.value.replace(/[?]/," QUERY ").replace(/[-]/," DASH ");
+		this.value = this.value.replace(/([A-Za-z])[.]/,"$1 X ");
+		this.value = this.value.replace(/(\d)[.]/,"$1R");
+		this.value = this.value.replace(/[ ]+/g," ");
 
-	// update check value when entering content in the message field, but allow override after entry
-	// prepend "ARL" if message field contains "ARL" word
+		// calculate the check
+		var message = this.value.replace(/\s+$/,"");
+		var check = message.split(/[\s]/).length;
+		if (this.value.match(/\bARL\b/)) { check = "ARL " + check; }
+		$("#check").val(check);
+	});
+
+	// signature
+	$("#signature").on("input", function() { this.value = this.value.replace(/[^0-9A-Za-z\. ]/,""); });
+	$("#op_note1").on("input", function() { this.value = this.value.replace(/[^0-9A-Za-z ]/,""); });
 
 	$("input[type=text], textarea").each(function() {
 		if ($(this).attr("data-default")) {
@@ -196,7 +211,7 @@ $(document).ready(function(){
 		}
 	
 		var html = "<pre>";
-		html += '<input type="text" style="width: 100%" value="QTC ' + $("#precedence").val() + " " + $("#city").val() + " " + $("#state").val() + " " + $("#zip").val() + '">\n';
+		html += '<input type="text" style="width: 100%" value="QTC ' + $("#precedence").val() + " " + $("#city").val() + " " + $("#state").val() + " " + $("#zip").val().replace(/ DASH.*?$/,"") + '">\n';
 		html += '<textarea style="height:100%; width:100%; min-height: auto;">';
 
 		// preamble
@@ -253,6 +268,20 @@ $(document).ready(function(){
 			html += "OP NOTE " + $("#op_note1").val();
 			html += "\n";
 		}
+
+
+		// message
+		html += "BT\n";
+		html += $("#message").val().split(/((?:[\w\/]+ ){5})/g).filter(Boolean).join("\n");
+		html += "\n";
+		html += "BT\n";
+
+		// signature
+		html += $("#signature").val();
+		html += "\n";
+		if ($("#op_note2").val() != "") { html += "OP NOTE " + $("#op_note2").val(); html += "\n"; }
+
+		html += "AR\n";
 
 		html += "</textarea>\n";
 		html += "</pre>";
@@ -366,9 +395,13 @@ Email: <input type="text" size=100 id="email" name="email" value="" style="text-
 Op Note: <input type="text" size=100 id="op_note1" name="op_note1" value="" style="text-transform: uppercase">
 
 <i>(note: this is the text)</i>
-
+Message:
+<textarea name="message" id="message" rows=5 cols=100 style="text-transform: uppercase">
+</textarea>
 
 <i>(note: this is the signature)</i>
+Signature/Name: <input type="text" size=75 id="signature" name="signature" style="text-transform: uppercase" data-default="NAME, TITLE, CALL SIGN, PHONE, etc" required>
+Op Note: <input type="text" size=100 id="op_note2" name="op_note2" value="" style="text-transform: uppercase">
 </pre>
 
 <br>
