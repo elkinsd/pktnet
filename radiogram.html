@@ -57,8 +57,8 @@ $(document).ready(function(){
 	$("#zip").on("change input", function() { this.value = this.value.replace(/[-]/," DASH "); });
 	$("#phone").on("input", function() { this.value = this.value.replace(/[^0-9 +]/,""); });
 	$("#ext").on("input", function() { this.value = this.value.replace(/[^0-9]/,""); });
-	$("#email").on("input", function() { this.value = this.value.replace(/[^0-9A-Za-z\.\@\/\_ -]/,""); });
-	$("#email").on("change input", function() { this.value = this.value.replace(/[\.]/," DOT ").replace(/[\@]/," ATSIGN ").replace(/[\/]/," SLASH ").replace(/[\_]/," UNDERSCORE ").replace(/[\-]/," DASH "); });
+	$("#email").on("input", function() { this.value = this.value.replace(/[^0-9A-Za-z\.\@\#\/\_ -]/,""); });
+	$("#email").on("change input", function() { this.value = this.value.replace(/[\.]/," DOT ").replace(/[\@]/," ATSIGN ").replace(/[\#]/," NUMBERISGN ").replace(/[\/]/," SLASH ").replace(/[\_]/," UNDERSCORE ").replace(/[\-]/," DASH ").replace(/  /," "); });
 	$("#op_note1").on("input", function() { this.value = this.value.replace(/[^0-9A-Za-z ]/,""); });
 
 	// message
@@ -422,7 +422,7 @@ Op Note: <input type="text" size=100 id="op_note2" name="op_note2" value="" styl
 	<tr> 
 		<td>Form Concept By: N3MEL</td> 
 		<td>Form Created By: KN4LQN</td> 
-		<td>Ver 1.0</td> 
+		<td>Ver 1.1</td> 
 	</tr> 
 	<tr> 
 		<td colspan=3 align="center"> 
