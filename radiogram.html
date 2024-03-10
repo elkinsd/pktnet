@@ -354,6 +354,23 @@ $(document).ready(function(){
 			]
 		});
 	});
+
+	$("#hx_link").on("click",function() {
+		$("#hx_dialog").dialog({
+			width: 800,
+			height: 600,
+			modal: true,
+			buttons: [
+				{
+					text: "Ok",
+					icon: "ui-icon-check",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			]
+		});
+	});
 })
 </script>
 </head>
@@ -363,12 +380,12 @@ $(document).ready(function(){
 </p>
 <form>
 <pre>
-<i>(note: this is the preamble)</i>
+<b>Preamble:</b>
 Number: <input type="text" size=10 name="radiogram_number" id="radiogram_number" value="" required>
     <input type="checkbox" id="is_service"> This is a service message
 Precedence: <select name="precedence" id="precedence"><option>EMERGENCY</option><option value="P">PRIORITY (P)</option><option value="W">WELFARE (W)</option><option value="R" selected>ROUTINE (R)</option></select>
     <input type="checkbox" id="is_exercise"> This is an exercise
-HX: <input type="checkbox" name="hxa" id="hxa"> HXA <input type="text" size=10 id="hxa_extra" name="hxa_extra">
+HX: <input type="checkbox" name="hxa" id="hxa"> HXA <input type="text" size=10 id="hxa_extra" name="hxa_extra">       <a href="#" id="hx_link">(click for more info on handling instructions)</a>
     <input type="checkbox" name="hxb" id="hxb"> HXB <input type="text" size=10 id="hxb_extra" name="hxb_extra">
     <input type="checkbox" name="hxc" id="hxc"> HXC
     <input type="checkbox" name="hxd" id="hxd"> HXD
@@ -381,7 +398,7 @@ Place of Origin: <input type="text" size=50 id="origin_place" value="" style="te
 Time Filed: <input type="text" size=20 id="time" value="" style="text-transform: uppercase" data-default="1800Z ">
 Date: <input type="text" size=20 id="date" value="" style="text-transform: uppercase" required>
 
-<i>(note: this is the address)</i>
+<b>Address:</b>
 Name: <input type="text" size=50 id="addressee" name="addressee" value="" style="text-transform: uppercase" data-default="FIRST AND LAST NAME" required>    Call Sign: <input type="text" size=20 id="addressee_callsign" name="name_callsign" style="text-transform: uppercase">
       <input type="text" size=50 id="addressee2" name="addressee2" value="" style="text-transform: uppercase">
 Address: <input type="text" size=50 id="address" name="address" value="" style="text-transform: uppercase">
@@ -393,12 +410,11 @@ Phone: <input type="text" size=15 id="phone" name="phone" value="" data-default=
 Email: <input type="text" size=100 id="email" name="email" value="" style="text-transform: uppercase">
 Op Note: <input type="text" size=100 id="op_note1" name="op_note1" value="" style="text-transform: uppercase">
 
-<i>(note: this is the text)</i>
-Message:
+<b>Message:</b>
 <textarea name="message" id="message" rows=5 cols=100 style="text-transform: uppercase">
 </textarea>
 
-<i>(note: this is the signature)</i>
+<b>Signature:</b>
 Signature/Name: <input type="text" size=75 id="signature" name="signature" style="text-transform: uppercase" data-default="NAME, TITLE, CALL SIGN, PHONE, etc" required>
 Op Note: <input type="text" size=100 id="op_note2" name="op_note2" value="" style="text-transform: uppercase">
 </pre>
@@ -413,6 +429,24 @@ Op Note: <input type="text" size=100 id="op_note2" name="op_note2" value="" styl
 &nbsp;
 <input type="button" id="load-data" value="Load Data">
 </form>
+
+<br>
+<hr>
+<br>
+
+<p>
+For more information:
+</p>
+
+<p>
+The Standard ARRL message format (Radiogram):<br>
+<a href="https://www.arrl.org/files/file/Public%20Service/MPG104A.pdf" target="_blank">https://www.arrl.org/files/file/Public%20Service/MPG104A.pdf</a>
+</p>
+
+<p>
+Origination, Relay and Delivery of Radiogram-ICS213 Messages from Radio Relay International:<br>
+<a href="https://radiorelay.org/files/training/Instructions-for-Radiogram-ICS213-Relay-and-De.pdf" target="_blank">https://radiorelay.org/files/training/Instructions-for-Radiogram-ICS213-Relay-and-De.pdf</a>
+</p>
 
 <br>
 <hr>
@@ -438,5 +472,34 @@ Op Note: <input type="text" size=100 id="op_note2" name="op_note2" value="" styl
 <div id="dialog" title="" style="display: none;"></div>
 <input type="file" id="load-file" accept="application/json" style="display: none;">
 
+<div id="hx_dialog" title="Handling Instructions" style="display: none;">
+<p>
+HANDLING INSTRUCTIONS, [HX ], OPTIONAL
+</p>
+
+<p>
+<b>OPTIONAL.</b> Do not use handling instructions unless a particular need is present. Handling instructions are used to instruct the relaying and/or delivering operator to handle the message according to the following codes (Refer to ARRL CD 218, pink card.). If used, handling instructions must stay with the message to the point of delivery.
+</p>
+
+<p>
+<b>* HANDLING INSTRUCTIONS</b> (ARRL, FSD-218 2/91)<br>
+<b>HXA__</b> (Followed by number.) Collect landline delivery authorized by addressee within [....] miles, (If no number, authorization is unlimited.).<br>
+<b>HXB__</b> (Followed by number.) Cancel message if not delivered within [....] hours of filing time; service originating station.<br>
+<b>HXC</b> Report date and time of delivery of the message back to the originating station.<br>
+<b>HXD</b> Report to originating station the identity of station from which received, plus date and time. Report identity of station to which relayed, plus date and time, or if delivered, report date and time and method of delivery (by service message).<br>
+<b>HXE</b> Delivering station get reply from addressee, originate message back.<br>
+<b>HXF__</b> (Followed by a number.) Hold delivery until [date].<br>
+<b>HXG</b> Delivery by mail or landline toll call not required. If toll call or other expense involved, cancel message and send service message back to originating station.<br>
+</p>
+
+<p>
+<b>* MORE THAN ONE HX CODE MAY BE USED.</b> If more than one code is used, they may be combined provided no numbers are to be inserted, otherwise the HX should be repeated, thus:<br>
+NR 27 R HXAC W1AW..., or, NR 27 R HXA50 HXC W1AW...(etc.).
+</p>
+</pre>
+</div>
+
 </body>
 </html>
+
+<!-- for more information: http://arrl-mdc.net/BTHV/BTHV68/BTHVweb.htm -->
